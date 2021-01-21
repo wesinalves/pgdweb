@@ -31,6 +31,16 @@ class GrupoAtividade(models.Model):
     def __str__(self):
         return self.nom_grupo_atividade[:50] + '...'
 
+class Unidade(models.Model):
+    nome = models.CharField(max_length=200)
+    sigla =  models.CharField(max_length=20)
+    excluido = models.BooleanField()
+    codigo = models.CharField(max_length=200)
+    unidade_superior = models.ForeignKey('self', on_delete=models.CASCADE, blank=True)
+
+    def __str__(self):
+        return self.nome[:50] + '...'
+
 class TipoPacto(models.Model):
     desc_tipo_pacto = models.CharField(max_length=200)
     unidades = models.ManyToManyField(Unidade, through='Unidade_TipoPacto')
@@ -43,15 +53,6 @@ class Unidade_TipoPacto(models.Model):
     tipo_pacto = models.ForeignKey(TipoPacto, on_delete=models.CASCADE)
     pacto_exteriror = models.BooleanField()
 
-class Unidade(models.Model):
-    nome = models.CharField(max_length=200)
-    sigla =  models.CharField(max_length=20)
-    excluido = models.BooleanField()
-    codigo = models.CharField(max_length=200)
-    unidade_superior = models.OneToOneField(Unidade, on_delete=models.CASCADE, blank=True)
-
-    def __str__(self):
-        return self.nome[:50] + '...'
 
 class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -59,7 +60,7 @@ class Usuario(models.Model):
     cpf = models.CharField(max_length=15)
     inativo = models.BooleanField()
     data_nascimento = models.DateTimeField('Data Nascimento')
-    unidades = models.ManytoManyField(Unidades, through='UsuarioGrupolUnidade')
+    unidades = models.ManyToManyField(Unidade, through='UsuarioGrupolUnidade')
 
     def __str__(self):
         return self.user.username + '...'
