@@ -1,5 +1,5 @@
 from django.db import models
-from configurations.models import OrdemServico, TipoPacto, CriterioAvaliacao, NotaAvaliacao
+from configurations.models import OrdemServico, TipoPacto, CriterioAvaliacao, NotaAvaliacao, GrupoAtividade
 
 # Create your models here.
 
@@ -45,13 +45,35 @@ class OrdemItemAvaliacao(models.Model):
         return self.descricao[:50] + '...'
 
 class OrdemGrupoAtividade(models.Model):
-    pass
+    nome = models.CharField(max_length=200)
+    inativo = models.BooleanField()
+    ordem_servico = models.ForeignKey(OrdemServico, on_delete='CASCADE')
+    grupo_atividade_original = models.ForeignKey(GrupoAtividade, on_delete='CASCADE')
+
+    def __str__(self):
+        return self.nome[:50] + '...'
 
 class OrdemAtividade(models.Model):
-    pass
+    nome = models.TextField(max_length=1000)
+    pacto_minimo_reducao = models.IntegerField()
+    inativo = models.BooleanField()
+    descricao_link = models.CharField(max_length=300)
+    id_grupo_atividade = models.IntegerField()
+    ordem_grupo_atividade = models.ForeignKey(OrdemGrupoAtividade, on_delete='CASCADE')
+
+    def __str__(self):
+        return self.nome[:50]
 
 class OrdemTipoAtividade(models.Model):
-    pass
+    faixa = models.CharField(max_length=100)
+    duracao_faixa = models.FloatField()
+    duracao_faixa_presencial = models.FloatField()
+    id_atividade = models.IntegerField()
+    texto_explicativo = models.TextField(max_length=500)
+    atividade = models.ForeignKey(OrdemAtividade, on_delete='CASCADE')
+
+    def __str__(self):
+        return self.faixa[:50]
 
 class Justificativa(models.Model):
     descricao = models.CharField(max_length=200)
