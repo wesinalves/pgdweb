@@ -44,6 +44,63 @@ class OrdemItemAvaliacao(models.Model):
     def __str__(self):
         return self.descricao[:50] + '...'
 
+class OrdemGrupoAtividade(models.Model):
+    pass
+
+class OrdemAtividade(models.Model):
+    pass
+
+class OrdemTipoAtividade(models.Model):
+    pass
+
+class Justificativa(models.Model):
+    descricao = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.descricao[:50] + '...'
+
+class Produto(models.Model):
+    carga_horaria = models.IntegerField()
+    quantidade_produto = models.IntegerField()
+    carga_horaria_produto = models.FloatField()
+    observacoes = models.CharField(max_length=200)
+    observacoes_adicionais = models.CharField(max_length=200)
+    motivo = models.CharField(max_length=200)
+    avaliacao = models.IntegerField()
+    entregue_no_prazo = models.BooleanField()
+    data_termino_real = models.DateField()
+    grupo_atividade = models.ForeignKey(OrdemGrupoAtividade, on_delete='CASCADE')
+    atividade = models.ForeignKey(OrdemAtividade, on_delete='CASCADE')
+    tipo_atividade = models.ForeignKey(OrdemTipoAtividade, on_delete='CASCADE')
+    pacto = models.ForeignKey(Pacto, on_delete='CASCADE')
+    Justificativa = models.ForeignKey(Justificativa, on_delete='CASCADE')
+
+class NivelAvaliacao(models.Model):
+    descricao = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.descricao[:50]
+
+class AvaliacaoProduto(models.Model):
+    cpf_avaliador = models.CharField(max_length=11)
+    data_avaliacao = models.DateField()
+    quantidade_produtos_avaliados = models.IntegerField()
+    avaliacao = models.IntegerField()
+    entregue_no_prazo = models.BooleanField()
+    localizacao_produto = models.CharField(max_length=200, blank=True)
+    data_termino_real = models.DateField(blank=True)
+    tipo_avaliacao = models.IntegerField()
+    nota_final_avaliacao_detalhada = models.FloatField(blank=True)
+    justificativa = models.ForeignKey(Justificativa, on_delete='CASCADE')
+    produto = models.ForeignKey(Produto, on_delete='CASCADE')
+    nivel_avaliacao = models.ForeignKey(NivelAvaliacao, on_delete='CASCADE')
+
+class AvaliacaoDetalhadaProduto(models.Model):
+    avaliacao_produto
+    ordem_item_avaliacao = models.ForeignKey(OrdemItemAvaliacao, on_delete='CASCADE')
+    ordem_criterio_avaliacao = models.ForeignKey(OrdemCriterioAvaliacao, on_delete='CASCADE')
+
+
 
 
 
