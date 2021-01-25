@@ -7,15 +7,15 @@ class Pacto(models.Model):
     cpf_usuario = models.CharField(max_length=200)
     nome = models.CharField(max_length=200)
     cpf_dirigente = models.CharField(max_length=200)
-    ordem_servico = models.ForeignKey(OrdemServico, on_delete='CASCADE')
-    tipo_pacto = models.ForeignKey(TipoPacto, on_delete='CASCADE')
+    ordem_servico = models.ForeignKey(OrdemServico, on_delete=models.CASCADE)
+    tipo_pacto = models.ForeignKey(TipoPacto, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome[:50] + '...'
 
 class Historico(models.Model):
     descricao = models.CharField(max_length=200)
-    pacto = models.ForeignKey(Pacto, on_delete='CASCADE')
+    pacto = models.ForeignKey(Pacto, on_delete=models.CASCADE)
 
 class Cronograma(models.Model):
     data = models.DateField()
@@ -26,10 +26,10 @@ class Cronograma(models.Model):
     suspenso = models.BooleanField()
 
 class OrdemCriterioAvaliacao(models.Model):
-    avaliacao_original = models.ForeignKey(CriterioAvaliacao, on_delete='CASCADE')
+    avaliacao_original = models.ForeignKey(CriterioAvaliacao, on_delete=models.CASCADE)
     descricao = models.CharField(max_length=100)
     texto_explicativo = models.TextField(max_length=1000)
-    ordem_servico = models.ForeignKey(OrdemServico, on_delete='CASCADE')
+    ordem_servico = models.ForeignKey(OrdemServico, on_delete=models.CASCADE)
     inativo = models.BooleanField()
 
     def __str__(self):
@@ -38,8 +38,8 @@ class OrdemCriterioAvaliacao(models.Model):
 class OrdemItemAvaliacao(models.Model):
     descricao = models.CharField(max_length=500)
     impacto_nota = models.FloatField()
-    nota_maxima = models.ForeignKey(NotaAvaliacao, on_delete='CASCADE')
-    criterio_avaliacao = models.ForeignKey(CriterioAvaliacao, on_delete='CASCADE')
+    nota_maxima = models.ForeignKey(NotaAvaliacao, on_delete=models.CASCADE)
+    criterio_avaliacao = models.ForeignKey(CriterioAvaliacao, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.descricao[:50] + '...'
@@ -47,8 +47,8 @@ class OrdemItemAvaliacao(models.Model):
 class OrdemGrupoAtividade(models.Model):
     nome = models.CharField(max_length=200)
     inativo = models.BooleanField()
-    ordem_servico = models.ForeignKey(OrdemServico, on_delete='CASCADE')
-    grupo_atividade_original = models.ForeignKey(GrupoAtividade, on_delete='CASCADE')
+    ordem_servico = models.ForeignKey(OrdemServico, on_delete=models.CASCADE)
+    grupo_atividade_original = models.ForeignKey(GrupoAtividade, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome[:50] + '...'
@@ -59,7 +59,7 @@ class OrdemAtividade(models.Model):
     inativo = models.BooleanField()
     descricao_link = models.CharField(max_length=300)
     id_grupo_atividade = models.IntegerField()
-    ordem_grupo_atividade = models.ForeignKey(OrdemGrupoAtividade, on_delete='CASCADE')
+    ordem_grupo_atividade = models.ForeignKey(OrdemGrupoAtividade, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome[:50]
@@ -70,7 +70,7 @@ class OrdemTipoAtividade(models.Model):
     duracao_faixa_presencial = models.FloatField()
     id_atividade = models.IntegerField()
     texto_explicativo = models.TextField(max_length=500)
-    atividade = models.ForeignKey(OrdemAtividade, on_delete='CASCADE')
+    atividade = models.ForeignKey(OrdemAtividade, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.faixa[:50]
@@ -91,11 +91,11 @@ class Produto(models.Model):
     avaliacao = models.IntegerField()
     entregue_no_prazo = models.BooleanField()
     data_termino_real = models.DateField()
-    grupo_atividade = models.ForeignKey(OrdemGrupoAtividade, on_delete='CASCADE')
-    atividade = models.ForeignKey(OrdemAtividade, on_delete='CASCADE')
-    tipo_atividade = models.ForeignKey(OrdemTipoAtividade, on_delete='CASCADE')
-    pacto = models.ForeignKey(Pacto, on_delete='CASCADE')
-    Justificativa = models.ForeignKey(Justificativa, on_delete='CASCADE')
+    grupo_atividade = models.ForeignKey(OrdemGrupoAtividade, on_delete=models.CASCADE)
+    atividade = models.ForeignKey(OrdemAtividade, on_delete=models.CASCADE)
+    tipo_atividade = models.ForeignKey(OrdemTipoAtividade, on_delete=models.CASCADE)
+    pacto = models.ForeignKey(Pacto, on_delete=models.CASCADE)
+    Justificativa = models.ForeignKey(Justificativa, on_delete=models.CASCADE)
 
 class NivelAvaliacao(models.Model):
     descricao = models.CharField(max_length=200)
@@ -113,14 +113,14 @@ class AvaliacaoProduto(models.Model):
     data_termino_real = models.DateField(blank=True)
     tipo_avaliacao = models.IntegerField()
     nota_final_avaliacao_detalhada = models.FloatField(blank=True)
-    justificativa = models.ForeignKey(Justificativa, on_delete='CASCADE')
-    produto = models.ForeignKey(Produto, on_delete='CASCADE')
-    nivel_avaliacao = models.ForeignKey(NivelAvaliacao, on_delete='CASCADE')
+    justificativa = models.ForeignKey(Justificativa, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    nivel_avaliacao = models.ForeignKey(NivelAvaliacao, on_delete=models.CASCADE)
 
 class AvaliacaoDetalhadaProduto(models.Model):
-    avaliacao_produto
-    ordem_item_avaliacao = models.ForeignKey(OrdemItemAvaliacao, on_delete='CASCADE')
-    ordem_criterio_avaliacao = models.ForeignKey(OrdemCriterioAvaliacao, on_delete='CASCADE')
+    avaliacao_produto = models.ForeignKey(AvaliacaoProduto, on_delete=models.CASCADE)
+    ordem_item_avaliacao = models.ForeignKey(OrdemItemAvaliacao, on_delete=models.CASCADE)
+    ordem_criterio_avaliacao = models.ForeignKey(OrdemCriterioAvaliacao, on_delete=models.CASCADE)
 
 
 
