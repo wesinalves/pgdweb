@@ -3,12 +3,43 @@ from configurations.models import OrdemServico, TipoPacto, CriterioAvaliacao, No
 
 # Create your models here.
 
+class SituacaoPacto(models.Model):
+    descricao = models.CharField(max_length=200)
+
 class Pacto(models.Model):
     cpf_usuario = models.CharField(max_length=200)
     nome = models.CharField(max_length=200)
-    cpf_dirigente = models.CharField(max_length=200)
+    matricula_siape = models.CharField(max_length=100, blank=True, null=True)
+    unidade_exercicio = models.IntegerField()
+    telefone_fixo_servidor = models.CharField(max_length=100, blank=True, null=True)
+    telefone_movel_servidor = models.CharField(max_length=100, blank=True, null=True)
     ordem_servico = models.ForeignKey(OrdemServico, on_delete=models.CASCADE)
+    executado_no_exterior = models.BooleanField()
+    processo_sei = models.CharField(max_length=100, blank=True, null=True)
+    possui_carga_horaria = models.BooleanField()
+    data_prevista_inicio = models.DateField()
+    data_prevista_termino = models.DateField()
+    carga_horaria = models.FloatField()
+    carga_horaria_total = models.FloatField()
+    situacao_pacto = models.ForeignKey(SituacaoPacto, on_delete=models.CASCADE)
+    motivo = models.TextField(max_length=500, blank=True, null=True)
+    suspensao_inicio = models.DateField(blank=True, null=True)
+    suspensao_termino = models.DateField(blank=True, null=True)
+    entregue_no_prazo = models.BooleanField(blank=True, null=True)
+    data_termino_real = models.DateField(blank=True, null=True)
+    data_interrupcao = models.DateField(blank=True, null=True)
     tipo_pacto = models.ForeignKey(TipoPacto, on_delete=models.CASCADE)
+    tap = models.TextField(max_length=500, blank=True, null=True)
+    cpf_solicitante = models.CharField(max_length=100, blank=True, null=True)
+    cpf_solicitante = models.CharField(max_length=100, blank=True, null=True)
+    status_aprovacao_solicitante = models.IntegerField(blank=True, null=True)
+    cpf_dirigente = models.CharField(max_length=200)
+    status_aprovacao_dirigente = models.IntegerField(blank=True, null=True)
+    data_aprovacao_dirigente = models.DateField(blank=True, null=True)
+    cpf_criador = models.CharField(max_length=100, blank=True, null=True)
+    visualizacao_restrita = models.BooleanField()
+    justificativa_visualizacao_restrita = models.CharField(max_length=100, blank=True, null=True)
+    
 
     def __str__(self):
         return self.nome[:50] + '...'
