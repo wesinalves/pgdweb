@@ -8,7 +8,7 @@ from .models import OrdemAtividade, OrdemTipoAtividade, OrdemGrupoAtividade, \
 
 class PactoAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Usuário', {'fields': ['nome','matricula','cpf_usuario', 'unidade_exercicio', \
+        ('Usuário', {'fields': ['nome','matricula_siape','cpf_usuario', 'unidade_exercicio', \
             'telefone_fixo_servidor','telefone_movel_servidor']}),
         ('Ordem de Serviço', {'fields': ['ordem_servico','executado_no_exterior','processo_sei','possui_carga_horaria', \
             'data_prevista_inicio','data_prevista_termino','carga_horaria','carga_horaria_total']}),
