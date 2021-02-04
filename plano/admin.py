@@ -21,5 +21,6 @@ class PactoAdmin(admin.ModelAdmin):
 
     search_fields = ['nome','matricula','cpf_usuario']
 
+    
 # Register your models here.
 admin.site.register(Pacto, PactoAdmin)

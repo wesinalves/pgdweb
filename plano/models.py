@@ -1,5 +1,7 @@
 from django.db import models
-from configurations.models import OrdemServico, TipoPacto, CriterioAvaliacao, NotaAvaliacao, GrupoAtividade
+from configurations.models import OrdemServico, TipoPacto, CriterioAvaliacao, \
+    NotaAvaliacao, GrupoAtividade
+from crum import get_current_user
 
 # Create your models here.
 
@@ -7,7 +9,7 @@ class SituacaoPacto(models.Model):
     descricao = models.CharField(max_length=200)
 
 class Pacto(models.Model):
-    nome = models.CharField(max_length=200)
+    nome = models.CharField(max_length=200, default=get_current_user)
     matricula_siape = models.CharField(max_length=100, blank=True, null=True)
     cpf_usuario = models.CharField(max_length=200)
     unidade_exercicio = models.IntegerField()
