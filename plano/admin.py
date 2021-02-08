@@ -6,6 +6,8 @@ from .models import OrdemAtividade, OrdemTipoAtividade, OrdemGrupoAtividade, \
     Pacto, Produto, Historico, Justificativa, Cronograma, \
     OrdemCriterioAvaliacao, OrdemItemAvaliacao
 
+from configurations.models import Usuario
+
 class PactoAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Usuário', {'fields': ['nome','matricula_siape','cpf_usuario', 'unidade_exercicio', \
@@ -20,6 +22,12 @@ class PactoAdmin(admin.ModelAdmin):
     list_filter = ['unidade_exercicio','situacao_pacto', 'tipo_pacto']
 
     search_fields = ['nome','matricula','cpf_usuario']
+    def get_changeform_initial_data(self, request):
+        user = request.user
+        return {'nome': user.first_name + ' ' + user.last_name,
+                'matricula_siape': user.usuario.matricula,
+                'cpf': user.usuario.cpf}
+    
 
     
 # Register your models here.

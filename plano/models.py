@@ -9,7 +9,7 @@ class SituacaoPacto(models.Model):
     descricao = models.CharField(max_length=200)
 
 class Pacto(models.Model):
-    nome = models.CharField(max_length=200, default=get_current_user)
+    nome = models.CharField(max_length=200)
     matricula_siape = models.CharField(max_length=100, blank=True, null=True)
     cpf_usuario = models.CharField(max_length=200)
     unidade_exercicio = models.IntegerField()
