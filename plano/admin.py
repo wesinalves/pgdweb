@@ -8,6 +8,9 @@ from .models import OrdemAtividade, OrdemTipoAtividade, OrdemGrupoAtividade, \
 
 from configurations.models import Usuario
 
+class ProdutoInline(admin.StackedInline):
+    model = Produto
+
 class PactoAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Usuário', {'fields': ['nome','matricula_siape','cpf_usuario', 'unidade_exercicio', \
@@ -22,6 +25,11 @@ class PactoAdmin(admin.ModelAdmin):
     list_filter = ['unidade_exercicio','situacao_pacto', 'tipo_pacto']
 
     search_fields = ['nome','matricula','cpf_usuario']
+
+    inlines = [
+        ProdutoInline,
+    ]
+
     def get_changeform_initial_data(self, request):
         user = request.user
         return {'nome': user.first_name + ' ' + user.last_name,
