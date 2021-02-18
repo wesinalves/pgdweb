@@ -1,7 +1,6 @@
 from django.db import models
 from configurations.models import OrdemServico, TipoPacto, CriterioAvaliacao, \
     NotaAvaliacao, GrupoAtividade
-from crum import get_current_user
 
 # Create your models here.
 
