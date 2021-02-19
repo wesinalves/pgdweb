@@ -10,6 +10,7 @@ from configurations.models import Usuario
 
 class ProdutoInline(admin.StackedInline):
     model = Produto
+    extra = 1
 
 class PactoAdmin(admin.ModelAdmin):
     fieldsets = [
