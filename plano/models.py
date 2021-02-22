@@ -6,6 +6,8 @@ from configurations.models import OrdemServico, TipoPacto, CriterioAvaliacao, \
 
 class SituacaoPacto(models.Model):
     descricao = models.CharField(max_length=200)
+    def __str__(self):
+        return self.descricao
 
 class Pacto(models.Model):
     nome = models.CharField(max_length=200)

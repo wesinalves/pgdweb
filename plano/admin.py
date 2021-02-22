@@ -4,7 +4,7 @@ from django.contrib import admin
 # Register your models here.
 from .models import OrdemAtividade, OrdemTipoAtividade, OrdemGrupoAtividade, \
     Pacto, Produto, Historico, Justificativa, Cronograma, \
-    OrdemCriterioAvaliacao, OrdemItemAvaliacao
+    OrdemCriterioAvaliacao, OrdemItemAvaliacao, SituacaoPacto
 
 from configurations.models import Usuario
 
@@ -35,9 +35,10 @@ class PactoAdmin(admin.ModelAdmin):
         user = request.user
         return {'nome': user.first_name + ' ' + user.last_name,
                 'matricula_siape': user.usuario.matricula,
-                'cpf': user.usuario.cpf}
+                'cpf_usuario': user.usuario.cpf}
     
 
     
 # Register your models here.
 admin.site.register(Pacto, PactoAdmin)
+admin.site.register(SituacaoPacto)
