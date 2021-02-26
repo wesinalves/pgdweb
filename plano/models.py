@@ -1,6 +1,6 @@
 from django.db import models
 from configurations.models import OrdemServico, TipoPacto, CriterioAvaliacao, \
-    NotaAvaliacao, GrupoAtividade
+    NotaAvaliacao, GrupoAtividade, Atividade, TipoAtividade
 
 # Create your models here.
 
@@ -111,12 +111,6 @@ class OrdemTipoAtividade(models.Model):
     def __str__(self):
         return self.faixa[:50]
 
-class Justificativa(models.Model):
-    descricao = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.descricao[:50] + '...'
-
 class Produto(models.Model):
     carga_horaria = models.IntegerField()
     quantidade_produto = models.IntegerField()
@@ -127,11 +121,11 @@ class Produto(models.Model):
     avaliacao = models.IntegerField()
     entregue_no_prazo = models.BooleanField()
     data_termino_real = models.DateField()
-    grupo_atividade = models.ForeignKey(OrdemGrupoAtividade, on_delete=models.CASCADE)
-    atividade = models.ForeignKey(OrdemAtividade, on_delete=models.CASCADE)
-    tipo_atividade = models.ForeignKey(OrdemTipoAtividade, on_delete=models.CASCADE)
+    grupo_atividade = models.ForeignKey(GrupoAtividade, on_delete=models.CASCADE)
+    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
+    tipo_atividade = models.ForeignKey(TipoAtividade, on_delete=models.CASCADE)
     pacto = models.ForeignKey(Pacto, on_delete=models.CASCADE)
-    Justificativa = models.ForeignKey(Justificativa, on_delete=models.CASCADE)
+    justificativa = models.TextField(max_length=500, blank=True, null=True)
 
 class NivelAvaliacao(models.Model):
     descricao = models.CharField(max_length=200)
@@ -149,7 +143,7 @@ class AvaliacaoProduto(models.Model):
     data_termino_real = models.DateField(blank=True)
     tipo_avaliacao = models.IntegerField()
     nota_final_avaliacao_detalhada = models.FloatField(blank=True)
-    justificativa = models.ForeignKey(Justificativa, on_delete=models.CASCADE)
+    justificativa = models.TextField(max_length=500, blank=True, null=True)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     nivel_avaliacao = models.ForeignKey(NivelAvaliacao, on_delete=models.CASCADE)
 
