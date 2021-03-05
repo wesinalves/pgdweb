@@ -2,9 +2,13 @@ from django.contrib import admin
 
 
 # Register your models here.
-from .models import OrdemAtividade, OrdemTipoAtividade, OrdemGrupoAtividade, \
-    Pacto, Produto, Historico, Cronograma, \
-    OrdemCriterioAvaliacao, OrdemItemAvaliacao, SituacaoPacto, \
+# from .models import OrdemAtividade, OrdemTipoAtividade, OrdemGrupoAtividade, \
+#     Pacto, Produto, Historico, Cronograma, \
+#     OrdemCriterioAvaliacao, OrdemItemAvaliacao, SituacaoPacto, \
+#     AvaliacaoDetalhadaProduto, AvaliacaoProduto, NivelAvaliacao
+
+from .models import Pacto, Produto, Historico, Cronograma, \
+    SituacaoPacto, \
     AvaliacaoDetalhadaProduto, AvaliacaoProduto, NivelAvaliacao
 
 from configurations.models import Usuario

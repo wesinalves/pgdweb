@@ -1,6 +1,6 @@
 from django.db import models
 from configurations.models import OrdemServico, TipoPacto, CriterioAvaliacao, \
-    NotaAvaliacao, GrupoAtividade, Atividade, TipoAtividade
+    NotaAvaliacao, GrupoAtividade, Atividade, TipoAtividade, ItemAvaliacao
 
 # Create your models here.
 
@@ -60,7 +60,7 @@ class Cronograma(models.Model):
     feriado = models.BooleanField()
     duracao_feriado = models.FloatField()
     suspenso = models.BooleanField()
-
+'''
 class OrdemCriterioAvaliacao(models.Model):
     avaliacao_original = models.ForeignKey(CriterioAvaliacao, on_delete=models.CASCADE)
     descricao = models.CharField(max_length=100)
@@ -110,7 +110,7 @@ class OrdemTipoAtividade(models.Model):
 
     def __str__(self):
         return self.faixa[:50]
-
+'''
 class Produto(models.Model):
     carga_horaria = models.IntegerField()
     quantidade_produto = models.IntegerField()
@@ -149,8 +149,8 @@ class AvaliacaoProduto(models.Model):
 
 class AvaliacaoDetalhadaProduto(models.Model):
     avaliacao_produto = models.ForeignKey(AvaliacaoProduto, on_delete=models.CASCADE)
-    ordem_item_avaliacao = models.ForeignKey(OrdemItemAvaliacao, on_delete=models.CASCADE)
-    ordem_criterio_avaliacao = models.ForeignKey(OrdemCriterioAvaliacao, on_delete=models.CASCADE)
+    ordem_item_avaliacao = models.ForeignKey(ItemAvaliacao, on_delete=models.CASCADE)
+    ordem_criterio_avaliacao = models.ForeignKey(CriterioAvaliacao, on_delete=models.CASCADE)
 
 
 
