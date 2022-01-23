@@ -48,4 +48,4 @@ class PactoAdmin(admin.ModelAdmin):
 admin.site.register(Pacto, PactoAdmin)
 admin.site.register(SituacaoPacto)
 admin.site.register(AvaliacaoProduto)
-#admin.site.register(AvaliacaoDetalhadaProduto)
+admin.site.register(AvaliacaoDetalhadaProduto)
